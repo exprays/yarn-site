@@ -19,9 +19,9 @@ export const Hero = () => {
             <Blur />
             <div className="container flex flex-col items-center justify-center px-4 md:px-6 space-y-20">
                 <div className="text-center space-y-4">
-                    <BlurIn word="Shell" className="text-7xl font-bold tracking-tighter sm:text-8xl md:text-9xl lg:text-[100px]/none" />
+                    <BlurIn word="Yarn" className="text-7xl font-bold tracking-tighter sm:text-8xl md:text-9xl lg:text-[100px]/none" />
                     <p className="max-w-[600px] text-gray-500 md:text-xl dark:text-gray-400">
-                        Introducing a powerful platform that helps you to chat with security and ease.
+                        Introducing a powerful opensource platform that helps you to chat with security and ease.
                     </p>
                     <Button className="mt-4" onClick={onClick}>
                         Get Started
