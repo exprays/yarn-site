@@ -70,7 +70,7 @@ const DATA = {
     social: {
       GitHub: {
         name: "GitHub",
-        url: "#",
+        url: "https://github.com/exprays",
         icon: Icons.github,
       },
       LinkedIn: {
@@ -80,11 +80,11 @@ const DATA = {
       },
       X: {
         name: "X",
-        url: "#",
+        url: "https://x.com/tssexprays",
         icon: Icons.x,
       },
       email: {
-        name: "Send Email",
+        name: "surya@thestarsociety.tech",
         url: "#",
         icon: Icons.email,
       },
