@@ -33,7 +33,7 @@ export const Hero = () => {
                         <div className="rounded-lg overflow-hidden border-4 border-gray-200 dark:border-gray-700">
                             <AspectRatio ratio={16 / 10} className="bg-black">
                                 <Image 
-                                    src="/mountain.jpg"
+                                    src="/heroimage.png"
                                     alt="hero"
                                     fill
                                     className="object-cover"

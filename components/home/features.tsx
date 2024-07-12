@@ -39,7 +39,7 @@ const features = [
         <div className="flex flex-1 w-full h-full flex-col space-y-2  ">
           {/* TODO */}
           <Image
-            src="/mountain.jpg"
+            src="/video.png"
             priority={true}
             alt="header"
             width={800}
