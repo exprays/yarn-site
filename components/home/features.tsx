@@ -1,118 +1,46 @@
 "use client";
 
-import React, { useState } from "react";
-import { cn } from "@/lib/utils";
+import { BentoCard, BentoGrid } from "@/components/custom/bento-grid";
+import { ImageIcon } from "@radix-ui/react-icons";
+import { Bot, TextCursorInput, SquarePlay } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "../ui/command";
 import { PlaceholdersAndVanishInput } from "../custom/vanish-input";
+import { useEffect, useState } from "react";
+import { Vortex } from "../custom/vortex";
 
-export const Features = () => {
-  const features = [
-    {
-      title: "Track issues effectively",
-      description:
-        "Track and manage your project issues with ease using our intuitive interface.",
-      skeleton: <SkeletonOne />,
-      className:
-        "col-span-1 lg:col-span-4 border-b lg:border-r dark:border-neutral-800",
-    },
-    {
-      title: "Capture pictures with AI",
-      description:
-        "Capture stunning photos effortlessly using our advanced AI technology.",
-      skeleton: <SkeletonTwo />,
-      className: "border-b col-span-1 lg:col-span-2 dark:border-neutral-800",
-    },
-    {
-      title: "Watch our AI on YouTube",
-      description:
-        "Whether its you or Tyler Durden, you can get to know about our product on YouTube",
-      skeleton: <SkeletonThree />,
-      className:
-        "col-span-1 lg:col-span-3 lg:border-r  dark:border-neutral-800",
-    },
-    {
-      title: "Deploy in seconds",
-      description:
-        "With our blazing fast, state of the art, cutting edge, we are so back cloud servies (read AWS) - you can deploy your model in seconds.",
-      skeleton: <SkeletonFour />,
-      className: "col-span-1 lg:col-span-3 border-b lg:border-none",
-    },
-  ];
-  return (
-    <div className="relative z-20 py-10 lg:py-40 max-w-7xl mx-auto">
-      <div className="px-8">
-        <h4 className="text-3xl lg:text-5xl lg:leading-tight max-w-5xl mx-auto text-center tracking-tight font-medium text-black dark:text-white">
-          Packed with thousands of features
-        </h4>
+const placeholders = [
+  "/yarnbot What's the first rule of Fight Club?",
+  "/yarnbot Who is Tyler Durden?",
+  "/yarnbot Where is Andrew Laeddis Hiding?",
+  "/yarnbot Write a Javascript method to reverse a string",
+  "/yarnbot How to assemble your own PC?",
+];
 
-        <p className="text-sm lg:text-base max-w-2xl my-4 mx-auto text-neutral-500 text-center font-normal dark:text-neutral-300">
-          From Image generation to video generation, Everything AI has APIs for
-          literally everything. It can even create this website copy for you.
-        </p>
-      </div>
-
-      <div className="relative ">
-        <div className="grid grid-cols-1 lg:grid-cols-6 mt-12 xl:border rounded-md dark:border-neutral-800">
-          {features.map((feature) => (
-            <FeatureCard key={feature.title} className={feature.className}>
-              <FeatureTitle>{feature.title}</FeatureTitle>
-              <FeatureDescription>{feature.description}</FeatureDescription>
-              <div className=" h-full w-full">{feature.skeleton}</div>
-            </FeatureCard>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-const FeatureCard = ({
-  children,
-  className,
-}: {
-  children?: React.ReactNode;
-  className?: string;
-}) => {
-  return (
-    <div className={cn(`p-4 sm:p-8 relative overflow-hidden`, className)}>
-      {children}
-    </div>
-  );
+const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  console.log(e.target.value);
+};
+const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  console.log("submitted");
 };
 
-const FeatureTitle = ({ children }: { children?: React.ReactNode }) => {
-  return (
-    <p className=" max-w-5xl mx-auto text-left tracking-tight text-black dark:text-white text-xl md:text-2xl md:leading-snug">
-      {children}
-    </p>
-  );
-};
-
-const FeatureDescription = ({ children }: { children?: React.ReactNode }) => {
-  return (
-    <p
-      className={cn(
-        "text-sm md:text-base  max-w-4xl text-left mx-auto",
-        "text-neutral-500 text-center font-normal dark:text-neutral-300",
-        "text-left max-w-sm mx-0 md:text-sm my-2"
-      )}
-    >
-      {children}
-    </p>
-  );
-};
-
-export const SkeletonOne = () => {
-  return (
-    <div className="relative flex py-8 px-2 gap-10 h-full">
+const features = [
+  {
+    Icon: SquarePlay,
+    name: "Efficient Video calls",
+    description: "Easy video and audio chats over group.",
+    href: "/",
+    cta: "",
+    className: "lg:row-start-1 lg:row-end-3 lg:col-start-1 lg:col-end-3",
+    background: (
+      <div className="relative flex py-8 px-2 gap-10 h-[570px]">
       <div className="w-full  p-5  mx-auto bg-white dark:bg-neutral-900 shadow-2xl group h-full">
         <div className="flex flex-1 w-full h-full flex-col space-y-2  ">
           {/* TODO */}
           <Image
-            src="/hero.gif"
+            src="/mountain.jpg"
+            priority={true}
             alt="header"
             width={800}
             height={800}
@@ -124,42 +52,70 @@ export const SkeletonOne = () => {
       <div className="absolute bottom-0 z-40 inset-x-0 h-60 bg-gradient-to-t from-white dark:from-black via-white dark:via-black to-transparent w-full pointer-events-none" />
       <div className="absolute top-0 z-40 inset-x-0 h-60 bg-gradient-to-b from-white dark:from-black via-transparent to-transparent w-full pointer-events-none" />
     </div>
-  );
-};
+    ),
+  },
+  {
+    Icon: ImageIcon,
+    name: "Easy file sharing",
+    description: "Image, video, and document sharing made easy.",
+    href: "/",
+    cta: "Learn more",
+    className: "lg:col-start-3 lg:col-end-3 lg:row-start-1 lg:row-end-3",
+    background: (
+      <ImageSection />
+    ),
+  },
+  {
+    Icon: Bot,
+    name: "AI Chatbot in your server",
+    description: "Currently in development stage so you have to request access for now!",
+    className: "col-span-3 lg:col-span-2",
+    href: "/",
+    cta: "Learn more",
+    background: (
+        <div className="pt-20 flex flex-col space-y-8">
+          <h2 className="text-xl text-center sm:text-5xl dark:text-white text-black">
+          Ask Yarn AI Anything
+        </h2>
+        <PlaceholdersAndVanishInput
+          placeholders={placeholders}
+          onChange={handleChange}
+          onSubmit={onSubmit}
+        />
+        </div>
+    ),
+  },
+  {
+    Icon: TextCursorInput,
+    name: "Full text search",
+    description: "Search through your server in less than 2ms",
+    href: "/",
+    cta: "Learn more",
+    className: "col-span-3 lg:col-span-1",
+    background: (
+      <Vortex
+        backgroundColor="black"
+        rangeY={800}
+        particleCount={500}
+        baseHue={120}
+        className="flex items-center flex-col justify-center px-2 md:px-10  py-4 w-full h-full"
+      >
+      </Vortex>
+    ),
+  }
+];
 
-export const SkeletonThree = () => {
-
-  const placeholders = [
-    "What's the first rule of Fight Club?",
-    "Who is Tyler Durden?",
-    "Where is Andrew Laeddis Hiding?",
-    "Write a Javascript method to reverse a string",
-    "How to assemble your own PC?",
-  ];
- 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
-  };
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("submitted");
-  };
-
+export const Features = () => {
   return (
-    <div className="h-[40rem] flex flex-col justify-center items-center px-4">
-    <h2 className="mb-10 sm:mb-20 text-xl text-center sm:text-5xl dark:text-white text-black">
-      Ask Aceternity UI Anything
-    </h2>
-    <PlaceholdersAndVanishInput
-      placeholders={placeholders}
-      onChange={handleChange}
-      onSubmit={onSubmit}
-    />
-  </div>
+    <BentoGrid>
+      {features.map((feature, idx) => (
+        <BentoCard key={idx} {...feature} />
+      ))}
+    </BentoGrid>
   );
-};
+}
 
-export const SkeletonTwo = () => {
+export function ImageSection() {
   const [rotations, setRotations] = useState<number[]>([]);
   
   useEffect(() => {
@@ -241,34 +197,3 @@ export const SkeletonTwo = () => {
     </div>
   );
 };
-
-export const SkeletonFour = () => {
-  return (
-    <div className="h-60 md:h-60  flex flex-col items-center relative bg-transparent dark:bg-transparent mt-10">
-      <Command className="absolute -right-10 md:-right-10 -bottom-40 md:-bottom-20">
-        <CommandInput placeholder="Type a command or search..." />
-        <CommandList>
-          <CommandEmpty>No results found.</CommandEmpty>
-          <CommandGroup heading="Files">
-            <CommandItem>screenshot.png</CommandItem>
-            <CommandItem>toblerone.png</CommandItem>
-            <CommandItem>finances.xlsx</CommandItem>
-            <CommandItem>study.pdf</CommandItem>
-            <CommandItem>classroom.docx</CommandItem>
-            <CommandItem>seed.txt</CommandItem>
-          </CommandGroup>
-          <CommandGroup heading="Members">
-            <CommandItem>Asish</CommandItem>
-            <CommandItem>Surya</CommandItem>
-            <CommandItem>Debasish</CommandItem>
-            <CommandItem>Nabeel</CommandItem>
-            <CommandItem>Sujogya</CommandItem>
-            <CommandItem>Sisir</CommandItem>
-          </CommandGroup>
-        </CommandList>
-      </Command>
-    </div>
-  );
-};
-
-

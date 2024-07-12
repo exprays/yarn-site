@@ -2,7 +2,7 @@
 
 import React, { PropsWithChildren, useRef } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { motion, useMotionValue, useSpring, useTransform, MotionValue } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
 import { cn } from "@/lib/utils";
 
@@ -33,27 +33,23 @@ const Dock = React.forwardRef<HTMLDivElement, DockProps>(
     },
     ref,
   ) => {
-    const mousex = useMotionValue(Infinity);
+    const mouseX = useMotionValue(Infinity);
 
     const renderChildren = () => {
-      return React.Children.map(children, (child, index) => {
-        if (React.isValidElement(child)) {
-          return React.cloneElement(child, {
-            mousex: mousex,
-            magnification: magnification,
-            distance: distance,
-            key: `dock-item-${index}`,
-          } as DockIconProps);
-        }
-        return child;
+      return React.Children.map(children, (child: any) => {
+        return React.cloneElement(child, {
+          mouseX: mouseX,
+          magnification: magnification,
+          distance: distance,
+        });
       });
     };
 
     return (
       <motion.div
         ref={ref}
-        onMouseMove={(e) => mousex.set(e.pageX)}
-        onMouseLeave={() => mousex.set(Infinity)}
+        onMouseMove={(e) => mouseX.set(e.pageX)}
+        onMouseLeave={() => mouseX.set(Infinity)}
         {...props}
         className={cn(dockVariants({ className }), {
           "items-start": direction === "top",
@@ -73,65 +69,55 @@ export interface DockIconProps {
   size?: number;
   magnification?: number;
   distance?: number;
-  mousex: MotionValue<number>;
+  mouseX?: any;
   className?: string;
   children?: React.ReactNode;
+  props?: PropsWithChildren;
 }
 
-const DockIcon = React.forwardRef<HTMLDivElement, DockIconProps>(
-  (
-    {
-      size,
-      magnification = DEFAULT_MAGNIFICATION,
-      distance = DEFAULT_DISTANCE,
-      mousex,
-      className,
-      children,
-      ...props
-    },
-    ref,
-  ) => {
-    const innerRef = useRef<HTMLDivElement | null>(null);
+const DockIcon = ({
+  size,
+  magnification = DEFAULT_MAGNIFICATION,
+  distance = DEFAULT_DISTANCE,
+  mouseX,
+  className,
+  children,
+  ...props
+}: DockIconProps) => {
+  const ref = useRef<HTMLDivElement>(null);
 
-    const distanceCalc = useTransform(mousex, (val: number) => {
-      const bounds = innerRef.current?.getBoundingClientRect() ?? { x: 0, width: 0 };
-      return val - bounds.x - bounds.width / 2;
-    });
+  const distanceCalc = useTransform(mouseX, (val: number) => {
+    const bounds = ref.current?.getBoundingClientRect() ?? { x: 0, width: 0 };
 
-    let widthSync = useTransform(
-      distanceCalc,
-      [-distance, 0, distance],
-      [40, magnification, 40],
-    );
+    return val - bounds.x - bounds.width / 2;
+  });
 
-    let width = useSpring(widthSync, {
-      mass: 0.1,
-      stiffness: 150,
-      damping: 12,
-    });
+  let widthSync = useTransform(
+    distanceCalc,
+    [-distance, 0, distance],
+    [40, magnification, 40],
+  );
 
-    return (
-      <motion.div
-        ref={(node) => {
-          innerRef.current = node;
-          if (typeof ref === 'function') {
-            ref(node);
-          } else if (ref) {
-            (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
-          }
-        }}
-        style={{ width }}
-        className={cn(
-          "flex aspect-square cursor-pointer items-center justify-center rounded-full",
-          className,
-        )}
-        {...props}
-      >
-        {children}
-      </motion.div>
-    );
-  },
-);
+  let width = useSpring(widthSync, {
+    mass: 0.1,
+    stiffness: 150,
+    damping: 12,
+  });
+
+  return (
+    <motion.div
+      ref={ref}
+      style={{ width }}
+      className={cn(
+        "flex aspect-square cursor-pointer items-center justify-center rounded-full",
+        className,
+      )}
+      {...props}
+    >
+      {children}
+    </motion.div>
+  );
+};
 
 DockIcon.displayName = "DockIcon";
 

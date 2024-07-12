@@ -11,7 +11,7 @@ export const Hero = () => {
     const router = useRouter();
 
     const onClick = () => {
-        router.push("/secure/sign-in")
+        router.push("https://app.yarn.thestarsociety.tech")
     }
 
     return (
@@ -33,7 +33,7 @@ export const Hero = () => {
                         <div className="rounded-lg overflow-hidden border-4 border-gray-200 dark:border-gray-700">
                             <AspectRatio ratio={16 / 10} className="bg-black">
                                 <Image 
-                                    src="/hero.gif"
+                                    src="/mountain.jpg"
                                     alt="hero"
                                     fill
                                     className="object-cover"

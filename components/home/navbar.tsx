@@ -64,7 +64,7 @@ const Icons = {
 const DATA = {
   navbar: [
     { href: "#", icon: YarnLogo, label: "Home" },
-    { href: "#", icon: User2Icon, label: "Sign in" },
+    { href: "https://app.yarn.thestarsociety.tech", icon: User2Icon, label: "Sign in" },
   ],
   contact: {
     social: {
